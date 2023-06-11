@@ -22,18 +22,32 @@ function capFirstLetter(str){
 function playRound(player, cpu){
     const playerChoice = player.toLowerCase();
     const cpuChoice = cpu.toLowerCase();
-    if(playerChoice === 'rock' && cpuChoice === 'paper') return looser(capFirstLetter(cpuChoice), capFirstLetter(playerChoice));
-    if(playerChoice === 'rock' && cpuChoice === 'scissors') return winner(capFirstLetter(playerChoice), capFirstLetter(cpuChoice));
-    if(playerChoice === 'paper' && cpuChoice === 'rock') return winner(capFirstLetter(playerChoice), capFirstLetter(cpuChoice));
-    if(playerChoice === 'paper' && cpuChoice === 'scissors') return looser(capFirstLetter(cpuChoice), capFirstLetter(playerChoice));
-    if(playerChoice === 'scissors' && cpuChoice === 'rock') return looser(capFirstLetter(cpuChoice), capFirstLetter(playerChoice));
-    if(playerChoice === 'scissors' && cpuChoice === 'paper') return winner(capFirstLetter(playerChoice), capFirstLetter(cpuChoice));
-    return "It's a Tie";
+    if(playerChoice === 'rock' && cpuChoice === 'paper') return {player: 0, cpu: 1, consoleValue: looser(capFirstLetter(cpuChoice), capFirstLetter(playerChoice))};
+    if(playerChoice === 'rock' && cpuChoice === 'scissors') return {player: 1, cpu: 0, consoleValue: winner(capFirstLetter(playerChoice), capFirstLetter(cpuChoice))};
+    if(playerChoice === 'paper' && cpuChoice === 'rock') return {player: 1, cpu: 0, consoleValue: winner(capFirstLetter(playerChoice), capFirstLetter(cpuChoice))};
+    if(playerChoice === 'paper' && cpuChoice === 'scissors') return {player: 0, cpu: 1, consoleValue: looser(capFirstLetter(cpuChoice), capFirstLetter(playerChoice))};
+    if(playerChoice === 'scissors' && cpuChoice === 'rock') return {player: 0, cpu: 1, consoleValue: looser(capFirstLetter(cpuChoice), capFirstLetter(playerChoice))};
+    if(playerChoice === 'scissors' && cpuChoice === 'paper') return {player: 1, cpu: 0, consoleValue: winner(capFirstLetter(playerChoice), capFirstLetter(cpuChoice))};
+    return {player: 0, cpu: 0, consoleValue: "It's a Tie"};
 }
 
+
 function game(){
-    for(let i = 0; i < 10; i++){
-        console.log(playRound(playerSelection(), getComputerChoice()));
+    playerWins = 0;
+    cpuWins = 0;
+    do{
+        const player = playerSelection();
+        const cpu = cpuChoice();
+        const roundObj = playRound(player, cpu);
+        playerWins += roundObj.player;
+        cpuWins += roundObj.cpu;
+        console.log(roundObj.consoleValue);
+    } while(playerWins < 3 && cpuWins < 3);
+    if(playerWins === 3){
+        console.log('You Win!!');
+    }
+    if(cpuWins === 3){
+        console.log('You Lose ...');
     }
 }
 
