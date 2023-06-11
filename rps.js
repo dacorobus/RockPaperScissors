@@ -37,7 +37,7 @@ function game(){
     cpuWins = 0;
     do{
         const player = playerSelection();
-        const cpu = cpuChoice();
+        const cpu = getComputerChoice();
         const roundObj = playRound(player, cpu);
         playerWins += roundObj.player;
         cpuWins += roundObj.cpu;
